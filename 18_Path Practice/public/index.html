@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <label for="user">User:</label>
+      <input type="text" name="user" id="user" />
+      <br />
+      <label for="role">Role:</label>
+      <input type="text" name="role" id="role" />
+      <br />
+      <label for="salary">Salary:</label>
+      <input type="text" name="salary" id="salary" />
+    </div>
+    <button onclick="submit()">Submit</button>
+    <div id="result"></div>
+
+    <script>
+      async function submit() {
+        let user = document.getElementById("user").value;
+        let role = document.getElementById("role").value;
+        let salary = document.getElementById("salary").value;
+
+        if (!user || !role || !salary) {
+          alert("Please fill in all fields.");
+          return;
+        }
+
+        try {
+          const response = await fetch("http://localhost:3005/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user, role, salary }),
+          });
+
+          if (response.ok) {
+            document.getElementById("result").textContent = "Data submitted successfully!";
+          } else {
+            document.getElementById("result").textContent = "Failed to submit data.";
+          }
+        } catch (error) {
+          console.log("ERROR", error);
+          document.getElementById("result").textContent = "An error occurred.";
+        }
+      }
+    </script>
+  </body>
+</html>
