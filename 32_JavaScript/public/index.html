@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form method="post">
+      <input type="text" value="" name="name" id="name" />
+      <input type="text" value="" name="gender" id="gender" />
+      <input type="number" value="" name="salary" id="salary" />
+      <button id="subBtn" type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById("subBtn").addEventListener("click", async() => {
+            let name = document.getElementById("name").value;
+            let gender = document.getElementById("gender").value;
+            let salary = document.getElementById("salary").value;
+
+
+            let sendData = {
+                name,
+                gender,
+                salary
+            };
+
+            let response = await fetch("http://localhost:3000", {method: "POST", headers : {
+                "Content-Type" : "application/json"
+            }, body : JSON.stringify(sendData)});
+
+            if (response.ok) {
+                alert("Data Send To Server SuccessFull");
+            }
+        })
+    </script>
+  </body>
+</html>
